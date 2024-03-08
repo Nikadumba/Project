@@ -24,6 +24,7 @@ class BookManager:
         # Display all books in the library or a message if the library is empty
         if not self.library:
             print("No books available in the library.")
+        
         else:
             print("\nBooks in Library:")
             # Enumerate through the library and print book details
@@ -32,14 +33,20 @@ class BookManager:
 
     def search_books(self, key):
         # Search for books with a matching title and display results
-        results = [book for book in self.library if key.lower() in book.title.lower()]
-        if results:
-            print("\nSearch Results:")
-            # Enumerate through the search results and print book details
-            for i, book in enumerate(results, start=1):
-                print(f"{i}. {book.title} by {book.author} ({book.year}) ({book.genre}) ({book.country})")
+        if not self.library:
+            print("No books available in the library.")
+
         else:
-            print("No matching books found in the library.")
+            results = [book for book in self.library if key.lower() in book.title.lower()]
+            
+            if results:
+                print("\nSearch Results:")
+                # Enumerate through the search results and print book details
+                for i, book in enumerate(results, start=1):
+                    print(f"{i}. {book.title} by {book.author} ({book.year}) ({book.genre}) ({book.country})")
+            
+            else:
+                print("No matching books found in the library.")
 
 def main():
     # Create a BookManager instance
@@ -59,24 +66,35 @@ def main():
             # Add a new book to the library
             title = input("Enter the book title: ")
             author = input("Enter the author's name: ")
-            year = input("Enter year: ")
+            while True:
+                year = input("Enter year: ")
+                try:
+                    year = int(year)
+                    break  # Exit the loop if the conversion is successful
+                except ValueError:
+                    print("Invalid input. Please enter an integer for the year.")
             genre = input("Enter the genre: ")
             country = input("Enter author's country: ")
             book_manager.add_book(title, author, year, genre, country)
+        
         elif choice == '2':
             # Display all books in the library
             book_manager.display_books()
+        
         elif choice == '3':
             # Search for books by title
             key = input("Enter the search title: ")
             book_manager.search_books(key)
+        
         elif choice == '4':
             # Exit the library program
-            print("Exiting Library.")
+            print("Exiting Library. Goodbye!")
             break
+        
         else:
             # Display an error message for an invalid choice
             print("Invalid choice. Please enter a number between 1 and 4.")
+
 
 if __name__ == "__main__":
     # Run the main function when the script is executed

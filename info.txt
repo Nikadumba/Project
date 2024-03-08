@@ -1,0 +1,4 @@
+Name: Nika
+Card number: 1111
+ID number: 0102
+Balance: 3000.0
